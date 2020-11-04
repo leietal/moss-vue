@@ -2,7 +2,8 @@ const CompressionPlugin = require("compression-webpack-plugin");
 const WebpackCdnPlugin = require("webpack-cdn-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
-const url = "10.20.30.165:8082";
+
+const API_URL = "10.20.30.165:8082";
 
 module.exports = {
   productionSourceMap: false,
@@ -13,18 +14,16 @@ module.exports = {
     proxy: {
       "/api": {
         //代理api
-        target: "http://" + url, //服务器api地址
+        target: "http://" + API_URL, //服务器api地址
         changeOrigin: true, //是否跨域
         pathRewrite: {
-          //重写路径
-          "^/api": "",
+          "^/api": "", //重写路径
         },
       },
       "/websocket": {
-        target: "ws://" + url,
+        target: "ws://" + API_URL,
         changeOrigin: true, //是否跨域
         ws: true, // proxy websockets
-        pathRewrite: {},
       },
     },
     overlay: {
@@ -36,9 +35,10 @@ module.exports = {
     loaderOptions: {
       less: {
         lessOptions: {
+          // 主题色配置
           modifyVars: {
-            "primary-color": "#4c33bb", // 全局主色
-            "link-color": "#4c33bb", // 链接色
+            "primary-color": "#6c63ff", // 全局主色
+            "link-color": "#6c63ff", // 链接色
             "success-color": "#52c41a", // 成功色
             "warning-color": "#faad14", // 警告色
             "error-color": "#f5222d", // 错误色
@@ -58,12 +58,14 @@ module.exports = {
   },
   chainWebpack: (config) => {
     if (process.env.NODE_ENV !== "dev") {
+      // 包文件大小看板
       config.plugin("bundleAnalyzer").use(
         new BundleAnalyzerPlugin({
-          analyzerMode: "disabled",
+          analyzerMode: "disabled", // 默认关闭
         })
       );
 
+      // 文件压缩
       config
         .plugin("compression")
         .use(CompressionPlugin, {
@@ -75,6 +77,7 @@ module.exports = {
         })
         .tap((args) => {});
 
+      // 排除npm依赖项目
       config.externals({
         vue: "Vue",
         "vue-router": "VueRouter",
@@ -85,6 +88,7 @@ module.exports = {
         "ant-design-vue/dist/antd.min.css": "antd",
       });
 
+      // 使用cdn依赖项目
       config
         .plugin("cdn")
         .use(

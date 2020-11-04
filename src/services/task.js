@@ -1,9 +1,9 @@
 import http from "@/commons/http";
 
 const api = {
-  query_task_front: "/anon/task/front_list",
+  queryTask: "/anon/task/list",
 };
 
-export function queryTaskFront(params) {
-  return http.get(api.query_task_front, { params });
+export function queryTask(params) {
+  return http.get(api.queryTask, { params });
 }

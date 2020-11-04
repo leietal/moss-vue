@@ -4,11 +4,13 @@ import { message } from "ant-design-vue";
 axios.defaults.timeout = 60000;
 axios.defaults.headers = { "X-Requested-With": "XMLHttpRequest" };
 
+// 提示消息配置，4秒关闭，只允许有一个提示弹窗
 message.config({
   duration: 4,
   maxCount: 1,
 });
 
+// 根据环境变量设置baseURL
 const httpInstance = axios.create({
   baseURL: process.env.VUE_APP_URL,
 });
@@ -27,19 +29,15 @@ httpInstance.interceptors.request.use(
   }
 );
 
-// 请求返回
+// 请求返回拦截
 httpInstance.interceptors.response.use(
   (res) => {
     console.info("axios.response------>%o", res);
-    const { code, msg } = res.data;
+    // http 请求成功
     if (res.status == 200) {
-      // 成功处理
-      if (["200"].includes(code)) {
-        return Promise.resolve(res.data);
-      }
+      return Promise.resolve(res.data);
     }
-    // 其他失败不处理
-    message.error(msg || "系统错误，请稍后再试!");
+    // 其他失败处理
     return Promise.reject(res.data);
   },
   (e) => {
