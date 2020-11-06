@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import MenuItem from "@/views/components/MenuItem";
-import { menuList as menuSource } from "@/views/data/menuList";
+import MenuItem from "@/views/layout/MenuItem";
+import { menuList as menuSource } from "@/views/layout/data/menuList";
 
 // 转换后台菜单
 const transformMenuData = function (data, parent) {
@@ -45,21 +45,6 @@ const transformMenuData = function (data, parent) {
       visible,
     };
   });
-};
-
-// 查询菜单
-const findMenu = function (data, path) {
-  if (!data || !data.length) {
-    return null;
-  }
-  let menu = null;
-  data.forEach((item) => {
-    menu = item.path === path ? item : findMenu(item.children, path);
-    if (menu) {
-      return menu;
-    }
-  });
-  return menu;
 };
 
 // 转换成平面菜单
@@ -96,11 +81,9 @@ export default {
     $route: {
       handler(val) {
         const menu = this.menuPathMap.get(val.path);
-        console.log("=============>", val, menu);
         if (!menu) {
           return;
         }
-        this.$store.commit("home/OPEN_TAB", { ...menu, route: val });
         this.selectedKeys = [menu.key];
       },
       immediate: true,

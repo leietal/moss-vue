@@ -18,9 +18,3 @@
     </template>
   </a-sub-menu>
 </template>
-
-<script>
-export default {
-  props: ["menuInfo"],
-};
-</script>

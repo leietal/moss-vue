@@ -6,7 +6,7 @@
       <!-- logo -->
       <div class="nav-logo">
         <span v-if="menuCollapsed"><a-icon type="exclamation-circle" /></span>
-        <span v-else>运营中台{{ tabActive }}</span>
+        <span v-else>后台管理</span>
       </div>
       <!-- 菜单展开收缩 -->
       <div class="nav-collapsed">
@@ -17,7 +17,7 @@
         />
       </div>
       <!-- 面包屑 -->
-      <nav-breadcrumb class="nav-breadcrumb" />
+      <!-- <nav-breadcrumb class="nav-breadcrumb" /> -->
       <!-- 工具条 -->
       <nav-tool-bar class="nav-tool-bar" />
       <!-- 登录账号信息 -->
@@ -29,35 +29,17 @@
         <menu-list />
       </div>
       <div class="layout-right">
-        <a-tabs
-          :activeKey="tabActive"
-          type="editable-card"
-          hideAdd
-          @edit="editTab"
-          @tabClick="changeTab"
-          ref="tab"
-        >
-          <a-tab-pane
-            :key="item.key"
-            :tab="item.title"
-            v-for="item in tabMap.values()"
-          />
-        </a-tabs>
-        <div>
-          <keep-alive v-if="keepAlive">
-            <router-view v-if="routerAlive" />
-          </keep-alive>
-        </div>
+        <router-view />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import MenuList from "@/views/components/MenuList";
-import NavBreadcrumb from "@/views/components/NavBreadcrumb";
-import NavAccount from "@/views/components/NavAccount";
-import NavToolBar from "@/views/components/NavToolBar";
+import MenuList from "@/views/layout/MenuList";
+import NavBreadcrumb from "@/views/layout/NavBreadcrumb";
+import NavAccount from "@/views/layout/NavAccount";
+import NavToolBar from "@/views/layout/NavToolBar";
 
 const findMenu = function (data, path) {
   if (!data || !data.length) {
@@ -74,52 +56,14 @@ export default {
     NavToolBar,
   },
   data() {
-    return {
-      routerAlive: true,
-      keepAlive: true,
-    };
+    return {};
   },
   computed: {
-    tabMap() {
-      return this.$store.state.home.tabMap || new Map();
-    },
-    tabActive() {
-      return this.$store.state.home.tabActive || null;
-    },
-    menuList() {
-      return this.$store.state.home.menuList || [];
-    },
     menuCollapsed() {
       return this.$store.state.home.menuCollapsed;
     },
   },
-  watch: {
-    "$store.state.home.tabDeleteNum": {
-      handler(num) {
-        const tab = this.tabMap.get(this.tabActive);
-        this.$router.push(tab.route);
-      },
-      deep: true,
-    },
-  },
   methods: {
-    reloadTab() {
-      this.routerAlive = false;
-      this.$nextTick(() => {
-        this.routerAlive = true;
-      });
-    },
-    editTab(key, action) {
-      this.routerAlive = false;
-      this.$nextTick(() => {
-        this.routerAlive = true;
-      });
-      this.$store.commit("home/CLOSE_TAB", key);
-    },
-    changeTab(key) {
-      let tab = this.tabMap.get(key);
-      this.$router.push(tab.route);
-    },
     changeMenuCollapsed() {
       this.$store.commit("home/SET_MENU_COLLAPSED", !this.menuCollapsed);
     },
@@ -143,7 +87,7 @@ body {
 .layout-nav {
   background-color: #6c63ff;
   display: grid;
-  grid-template-columns: auto auto auto 1fr auto;
+  grid-template-columns: auto auto 1fr auto;
 }
 .layout-nav .nav-logo {
   height: 100%;

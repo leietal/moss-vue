@@ -1,5 +1,10 @@
 <template>
   <div class="container">
+    <a-page-header
+      class="header"
+      title="不带查询条件的表格"
+      sub-title="mixins"
+    />
     <a-table
       v-bind="tableData"
       :scroll="{ x: 1000, y: 400 }"
@@ -19,7 +24,7 @@ const columns = [
     key: "id",
   },
   {
-    title: "核销总额",
+    title: "姓名",
     dataIndex: "name",
     key: "name",
   },
@@ -31,28 +36,11 @@ export default {
   data() {
     return {
       tableData: { columns },
-      formRules: {
-        username: [
-          "username",
-          {
-            rules: [],
-            normalize: (val) => {
-              return val && val.trim();
-            },
-          },
-        ],
-        password: [
-          "password",
-          {
-            rules: [],
-          },
-        ],
-      },
     };
   },
   methods: {
     loadData(params) {
-      console.log("%c=====>%o", "color:#fff;background:#f99", params);
+      console.log("loadData=====>%o", params);
       const data = {
         data: {
           entityList: [
@@ -71,17 +59,11 @@ export default {
   },
   mounted() {
     this.initParams({
-      beginDate: moment(),
-      endDate: moment(),
+      beginDate: moment().format("YYYY-MM-DD"),
+      endDate: moment().format("YYYY-MM-DD"),
       type: 1,
     });
     this.query();
   },
 };
 </script>
-
-<style scoped>
-.container {
-  padding: 10px;
-}
-</style>

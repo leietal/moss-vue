@@ -47,7 +47,9 @@ export const mixinSimplePageTable = {
     },
     // 查询（翻页也用这个）
     query(pagination) {
-      this.paginate({ pagination, params: { ...this.tableData.params } });
+      this.$nextTick(() => {
+        this.paginate({ pagination, params: { ...this.tableData.params } });
+      });
     },
     // 分页查询数据
     paginate({ pagination = {}, params = {} } = {}) {
@@ -97,22 +99,24 @@ export const mixinPageTable = {
       if (!data) {
         return;
       }
-      const fields = this.queryForm.getFieldsValue();
       for (let key in data) {
-        if (!fields.hasOwnProperty(key)) {
-          this.queryForm.getFieldDecorator(key, { preserve: true });
-        }
+        this.queryForm.getFieldDecorator(key, {
+          preserve: true,
+        });
       }
       this.queryForm.setFieldsValue(data);
     },
     // 查询（翻页也用这个）
     query(pagination) {
-      this.queryForm.validateFields((errors, values) => {
-        if (errors) {
-          return;
-        }
-        this.strengthenParams(values);
-        this.paginate({ pagination, params: { ...values } });
+      this.$nextTick(() => {
+        this.queryForm.validateFields((errors, values) => {
+          if (errors) {
+            return;
+          }
+          let params = { ...values };
+          this.strengthenParams(params);
+          this.paginate({ pagination, params });
+        });
       });
     },
     // 增强查询条件
@@ -120,7 +124,7 @@ export const mixinPageTable = {
     // 重置查询参数
     reset() {
       this.queryForm.resetFields();
-      this.initParams();
+      this.$nextTick(this.initParams);
     },
   },
 };

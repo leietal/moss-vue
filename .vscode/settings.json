@@ -1,6 +1,9 @@
 {
+  "debug.console.fontFamily": "mononoki,'思源等宽 EL','Source Han Mono HC EL','Courier Prime Code', Monaco",
+  "markdown.preview.fontFamily": "-apple-system, mononoki,'思源等宽 EL','Source Han Mono HC EL','Courier Prime Code', Monaco,BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif",
+  "editor.fontFamily": "Menlo,Monaco,'Courier New',monospace",
+  "markdown.preview.fontSize": 13,
   "editor.fontSize": 13,
   "debug.console.fontSize": 13,
-  "debug.console.fontFamily": "mononoki,'思源等宽 EL','Source Han Mono HC EL','Courier Prime Code', Monaco",
-  "markdown.preview.fontFamily": "-apple-system, mononoki,'思源等宽 EL','Source Han Mono HC EL','Courier Prime Code', Monaco,BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif"
+  "terminal.integrated.fontSize": 13
 }

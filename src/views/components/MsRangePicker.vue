@@ -1,8 +1,9 @@
 <template>
   <a-range-picker
-    @change="changeDate"
     v-model="dateValue"
     style="width: 100%"
+    valueFormat="Y-MM-DD"
+    @change="change"
   />
 </template>
 
@@ -33,12 +34,7 @@ export default {
     };
   },
   methods: {
-    changeDate(val) {
-      console.log("==range=======>", this, val);
-      this.form.setFieldsValue({
-        [this.beginDate]: val && val[0].format("Y-MM-DD 00:00:00"),
-        [this.endDate]: val && val[1].format("Y-MM-DD 23:59:59"),
-      });
+    change(val) {
       this.$emit("change", val);
     },
   },
@@ -46,8 +42,14 @@ export default {
     value: {
       handler(val) {
         this.dateValue = val;
+        let [beginDate, endDate] = val || [];
+        this.form.setFieldsValue({
+          [this.beginDate]: beginDate && `${beginDate} 00:00:00`,
+          [this.endDate]: endDate && `${endDate} 23:59:59`,
+        });
       },
       immediate: true,
+      deep: true,
     },
   },
   mounted() {

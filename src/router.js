@@ -3,22 +3,14 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-const A = () => import("@/views/demo/A");
-const B = () => import("@/views/demo/B");
-const C = () => import("@/views/demo/C");
-const DetailA = () => import("@/views/demo/DetailA");
-const DetailB = () => import("@/views/demo/DetailB");
-const DetailC = () => import("@/views/demo/DetailC");
-const Chart = () => import("@/views/demo/Chart");
-
 const Index = () => import("@/views/Index");
 const Login = () => import("@/views/Login");
-const Demo1 = () => import("@/views/Demo1");
-const Form = () => import("@/views/Form");
-const FormModel = () => import("@/views/FormModel");
-const Test = () => import("@/views/Test");
-const Table = () => import("@/views/Table");
-const Table2 = () => import("@/views/Table2");
+const Chart = () => import("@/views/chart/Chart");
+const Form = () => import("@/views/form/Form");
+const FormModel = () => import("@/views/form/FormModel");
+const Table = () => import("@/views/table/Table");
+const Table2 = () => import("@/views/table/Table2");
+const FruitsDropdown = () => import("@/views/model/DropdownDemo");
 
 // 重写原始的push方法，避免push一个跟当前一样的路径时后台会报错的问题
 const originalPush = VueRouter.prototype.push;
@@ -28,14 +20,6 @@ VueRouter.prototype.push = function push(location) {
 
 const router = new VueRouter({
   routes: [
-    {
-      path: "/demo1",
-      component: Demo1,
-      name: "demo1",
-      meta: {
-        title: "登录",
-      },
-    },
     {
       path: "/login",
       component: Login,
@@ -52,54 +36,6 @@ const router = new VueRouter({
         title: "首页",
       },
       children: [
-        {
-          path: "/a",
-          component: A,
-          name: "a",
-          meta: {
-            title: "列表A",
-          },
-        },
-        {
-          path: "/a/detail/:id",
-          component: DetailA,
-          name: "a_detail",
-          meta: {
-            title: "明细A",
-          },
-        },
-        {
-          path: "/b",
-          component: B,
-          name: "b",
-          meta: {
-            title: "列表B",
-          },
-        },
-        {
-          path: "/b/detail/:id",
-          component: DetailB,
-          name: "b_detail",
-          meta: {
-            title: "明细B",
-          },
-        },
-        {
-          path: "/c",
-          component: C,
-          name: "c",
-          meta: {
-            title: "列表C",
-          },
-        },
-        {
-          path: "/c/detail/:id",
-          component: DetailC,
-          name: "c_detail",
-          meta: {
-            title: "明细C",
-          },
-        },
         {
           path: "/chart",
           component: Chart,
@@ -125,19 +61,11 @@ const router = new VueRouter({
           },
         },
         {
-          path: "/test",
-          component: Test,
-          name: "test",
+          path: "/fruits_dropdown",
+          component: FruitsDropdown,
+          name: "fruits_dropdown",
           meta: {
-            title: "Test",
-          },
-        },
-        {
-          path: "/test/:type",
-          component: Test,
-          name: "test2",
-          meta: {
-            title: "Test2222",
+            title: "FruitsDropdown",
           },
         },
         {
@@ -145,7 +73,7 @@ const router = new VueRouter({
           component: Table,
           name: "table",
           meta: {
-            title: "table",
+            title: "Table",
           },
         },
         {
@@ -153,7 +81,7 @@ const router = new VueRouter({
           component: Table2,
           name: "table2",
           meta: {
-            title: "table2",
+            title: "Table2",
           },
         },
       ],

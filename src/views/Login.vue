@@ -3,7 +3,9 @@
     <div class="seation login-body">
       <div class="login-box">
         <div class="login-left">
-          <object :data="loginImg" width="200" type="image/svg+xml">图片未能正常显示</object>
+          <object :data="loginImg" width="200" type="image/svg+xml">
+            图片未能正常显示
+          </object>
         </div>
 
         <div class="login-right">
@@ -47,7 +49,8 @@
                   @click="submit"
                   block
                   :loading="loading"
-                >{{loading?'正在登录':'登录'}}</a-button>
+                  >{{ loading ? "正在登录" : "登录" }}</a-button
+                >
               </a-col>
             </a-row>
           </a-form>

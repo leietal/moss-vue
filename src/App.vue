@@ -69,4 +69,14 @@ button:not(:last-child) {
 .ant-form-item-label {
   padding: 0 0 4px !important;
 }
+.container {
+  padding: 15px;
+  box-sizing: border-box;
+}
+.container .header {
+  background-color: #fff;
+  border-bottom: 1px solid #f1f1f1;
+  margin: -15px;
+  margin-bottom: 15px;
+}
 </style>

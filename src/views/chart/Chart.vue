@@ -1,7 +1,18 @@
 <template>
   <div class="container">
+    <a-page-header
+      class="header"
+      title="图表"
+      sub-title="visiter"
+    />
     <a-card bordered size="small" title="本周销售图">
-      <v-chart :force-fit="true" :height="400" :data="data" :scale="scale[0]" class="xs-chart">
+      <v-chart
+        :force-fit="true"
+        :height="400"
+        :data="data"
+        :scale="scale[0]"
+        class="xs-chart"
+      >
         <v-tooltip />
         <v-axis />
         <v-legend />
@@ -19,8 +30,6 @@
 </template>
 
 <script>
-import sourceData from "@/views/data/demo3.json";
-
 const DataSet = require("@antv/data-set");
 const scale = [
   {
@@ -34,6 +43,8 @@ const scale = [
     max: 1,
   },
 ];
+
+const sourceData = [];
 
 const dv = new DataSet.View().source(sourceData);
 dv.transform(
@@ -63,10 +74,3 @@ export default {
   methods: {},
 };
 </script>
-
-<style scoped>
-.container {
-  padding: 10px;
-  box-sizing: border-box;
-}
-</style>

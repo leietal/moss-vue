@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <a-page-header class="header" title="FormModel表单" sub-title="v-model" />
     <a-card title="用户登录" class="login-card">
       <a-form-model :model="user" :rules="formRules" ref="form">
         <a-form-model-item label="用户名" prop="username">
@@ -27,7 +28,7 @@
             :loading="loading"
             :disabled="disabled"
           >
-            保存
+            登录
           </a-button>
         </a-form-model-item>
       </a-form-model>
@@ -57,11 +58,6 @@ export default {
             message: "账号只能4~32位字符",
             trigger: "change",
           },
-          {
-            pattern: "",
-            message: "账号只能是英文、数字的组合",
-            trigger: "change",
-          },
         ],
         password: [
           {
@@ -73,11 +69,6 @@ export default {
             min: 6,
             max: 32,
             message: "密码只能6~32位字符",
-            trigger: "change",
-          },
-          {
-            pattern: "",
-            message: "密码只能是英文、数字、字符的组合",
             trigger: "change",
           },
         ],
@@ -97,15 +88,13 @@ export default {
       }
       this.loading = !this.loading;
       this.$refs["form"].validate((success) => {
-        console.log("=========>");
+        console.log("submit=========>", success);
         if (!success) {
           this.loading = false;
           return;
         }
-        // FIXME 提交表单数据
-        setTimeout(() => {
-          this.loading = false;
-        }, 1000);
+        // TODO 调用接口
+        this.loading = false;
       });
     },
   },
@@ -113,9 +102,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  padding: 10px;
-}
 .login-card {
   width: 400px;
   margin: auto;

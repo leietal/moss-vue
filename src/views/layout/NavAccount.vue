@@ -6,12 +6,12 @@
   >
     <div class="account-info">
       <a-avatar class="avatar" icon="user" />
-      <span>{{ user.cname || "匿名" }}</span>
+      <span>{{ user.cname || "匿名用户" }}</span>
       <a-icon type="caret-down" />
     </div>
     <div slot="overlay" class="drop-panel" @click="(e) => e.preventDefault()">
       <a class="username" href="javascript:void(520)">
-        <span>匿名</span>
+        <span>匿名用户</span>
         <a-icon type="arrow-right" />
       </a>
       <div>账号：leijiaping</div>
@@ -82,7 +82,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   font-size: 18px;
-  color: #6c63ff;
+  color: #585858;
   margin-bottom: 10px;
 }
 .drop-panel .username:hover .anticon {
