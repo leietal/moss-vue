@@ -1,11 +1,15 @@
+// 文件压缩
 const CompressionPlugin = require("compression-webpack-plugin");
+//  js库 cdn插件
 const WebpackCdnPlugin = require("webpack-cdn-plugin");
+// 打包大小分析
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 
-const API_URL = "10.20.30.165:8082";
+const url = "//localhost:8086/";
 
 module.exports = {
+  outputDir: "moss-vue",
   productionSourceMap: false,
   lintOnSave: false,
   devServer: {
@@ -14,16 +18,19 @@ module.exports = {
     proxy: {
       "/api": {
         //代理api
-        target: "http://" + API_URL, //服务器api地址
+        target: `http:${url}`, //服务器api地址
         changeOrigin: true, //是否跨域
+        ws: true, // proxy websockets
         pathRewrite: {
-          "^/api": "", //重写路径
+          //重写路径
+          "^/api": "",
         },
       },
       "/websocket": {
-        target: "ws://" + API_URL,
+        target: `ws:${url}`,
         changeOrigin: true, //是否跨域
         ws: true, // proxy websockets
+        pathRewrite: {},
       },
     },
     overlay: {
@@ -35,21 +42,20 @@ module.exports = {
     loaderOptions: {
       less: {
         lessOptions: {
-          // 主题色配置
           modifyVars: {
-            "primary-color": "#6c63ff", // 全局主色
-            "link-color": "#6c63ff", // 链接色
-            "success-color": "#52c41a", // 成功色
-            "warning-color": "#faad14", // 警告色
-            "error-color": "#f5222d", // 错误色
-            "font-size-base": "14px", // 主字号
-            "heading-color": "rgba(0, 0, 0, 0.85)", // 标题色
-            "text-color": "rgba(0, 0, 0, 0.65)", // 主文本色
-            "text-color-secondary": "rgba(0, 0, 0, 0.45)", // 次文本色
-            "disabled-color": "rgba(0, 0, 0, 0.25)", // 失效色
+            "primary-color": "#546de5", // 全局主色
+            // "link-color": "#2ecc71", // 链接色
+            // "success-color": "#1dd1a1", // 成功色
+            // "warning-color": "#feca57", // 警告色
+            // "error-color": "#ee5253", // 错误色
+            // "font-size-base": "14px", // 主字号
+            // "heading-color": "rgba(0, 0, 0, 0.85)", // 标题色
+            // "text-color": "rgba(0, 0, 0, 0.65)", // 主文本色
+            // "text-color-secondary": "rgba(0, 0, 0, 0.45)", // 次文本色
+            // "disabled-color": "rgba(0, 0, 0, 0.25)", // 失效色
             "border-radius-base": "2px", // 组件/浮层圆角
-            "border-color-base": "#d9d9d9", // 边框色
-            "box-shadow-base": "0 2px 8px rgba(0, 0, 0, 0.15)", // 浮层阴影
+            // "border-color-base": "#d9d9d9", // 边框色
+            // "box-shadow-base": "0 2px 8px rgba(0, 0, 0, 0.15)", // 浮层阴影
           },
           javascriptEnabled: true,
         },
@@ -58,14 +64,12 @@ module.exports = {
   },
   chainWebpack: (config) => {
     if (process.env.NODE_ENV !== "dev") {
-      // 包文件大小看板
       config.plugin("bundleAnalyzer").use(
         new BundleAnalyzerPlugin({
-          analyzerMode: "disabled", // 默认关闭
+          analyzerMode: "disabled",
         })
       );
 
-      // 文件压缩
       config
         .plugin("compression")
         .use(CompressionPlugin, {
@@ -77,7 +81,6 @@ module.exports = {
         })
         .tap((args) => {});
 
-      // 排除npm依赖项目
       config.externals({
         vue: "Vue",
         "vue-router": "VueRouter",
@@ -85,10 +88,10 @@ module.exports = {
         "ant-design-vue": "antd",
         axios: "axios",
         moment: "moment",
+        // "vue-quill-editor": "vue-quill-editor",
         "ant-design-vue/dist/antd.min.css": "antd",
       });
 
-      // 使用cdn依赖项目
       config
         .plugin("cdn")
         .use(
@@ -128,6 +131,11 @@ module.exports = {
                   paths: ["dist/antd.min.js", "dist/antd-with-locales.min.js"],
                   style: "dist/antd.min.css",
                 },
+                // {
+                //   name: "vue-quill-editor",
+                //   var: "VueQuillEditor",
+                //   paths: ["dist/vue-quill-editor.js"],
+                // },
               ],
             },
           })

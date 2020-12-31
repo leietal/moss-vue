@@ -2,18 +2,43 @@
 <html lang="zh">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-  <title>moss</title>
+  <meta charset="utf-8" />
+  <!-- 避免IE兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+  <!-- 极速模式渲染 -->
+  <meta name="renderer" content="webkit">
+  <!-- 屏幕缩放大小 -->
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+  <!-- SEO -->
+  <meta property="generator" content="vue 2">
+  <meta id="keywords" property="keywords" content="">
+  <meta id="robots" property="robots" content="none">
+  <meta name="description" content="">
+
+  <meta property="og:title" content="MOSS VUE">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="<%= BASE_URL %>favicon.png" />
+
+  <!-- 图标 -->
+  <link id="favicon" rel="icon" href="<%= BASE_URL %>favicon.png" />
+  <!-- dns解析 -->
+  <link rel="dns-prefetch" href="//unpkg.zhimg.com">
+  <title>MOSS VUE</title>
+
 </head>
 
 <body>
-  <noscript>
-    <h1>您的浏览器不支持或未开启JavaScript脚本</h1>
-  </noscript>
   <div id="app"></div>
+  <script>
+    window.onpageshow = function (event) {
+      if (event.persisted) {
+        window.location.reload()
+      }
+    };
+  </script>
 </body>
 
 </html>

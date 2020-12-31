@@ -1,15 +1,10 @@
 import Vue from "vue";
-import Vuex from "vuex";
-import home from "@/store/home";
-import dict from "@/store/dict";
+import vuex from "vuex";
+import home from "./modules/home";
+Vue.use(vuex);
 
-Vue.use(Vuex);
-
-const vuex = new Vuex.Store({
+export default new vuex.Store({
   modules: {
     home,
-    dict,
   },
 });
-
-export default vuex;
